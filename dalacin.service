@@ -1,0 +1,13 @@
+[Unit]
+Description=Dalacin, A multi-user manager for v2ray.
+After=network-online.target
+
+[Service]
+User=root
+ExecStart=/usr/sbin/dalacin
+Restart=on-failure
+RestartSec=5
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target

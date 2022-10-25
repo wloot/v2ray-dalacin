@@ -1,0 +1,75 @@
+---
+# 日志等级, 允许的值debug, info, warn, error
+loglevel: info
+# 是否优先把域名解析为ipv6
+ipv6: false
+# 自定义dns配置, 可以继续写多个
+dns:
+- 8.8.8.8
+# 也允许文本形式的v2ray json配置
+- '{"address":"1.0.0.1","domains":["geosite:google@cn"]}'
+
+# 节点服务配置, 可以直接多开
+servers:
+# 第一个节点
+- name: server1 # 自定义名称, 空着会自动生成
+  # 前端配置
+  webapi:
+    # 类型, 目前只适配了v2board
+    type: v2board
+    # 地址
+    url: https://google.com/
+    # 节点id
+    id: 1
+    # 前端设置的密钥
+    key: dsajdasjdas
+  # ssl证书配置
+  # 不填写或有问题, 会强制忽略前端下发的ssl配置
+  ssl:
+    # 证书路径
+    cert: "/path/to/cert.pem"
+    # 密钥路径
+    key: "/path/to/cert.key"
+  # 是否开启tcp fast open, 默认关闭
+  tfo: false
+  # 是否统计+上报用户ip
+  userip: false
+  # 入口监听IP, 适用于多IP主机指定一个入口
+  listen: 0.0.0.0
+  # 出口路由配置
+  routing:
+    # 指定的域名, ip走这个出口sender
+    - sender: 127.0.0.1
+      # 镶套代理, 转发至以下代理
+      proxy:
+        # 目前只支持socks
+        protocol: socks
+        address: 1.1.1.1
+        port: 222
+        user: 111
+        password: 1113
+      domain:
+        - baidu.com
+      ip:
+        - 1.1.1.1
+      # 匹配被代理的协议类型
+      network: tcp,udp
+    # 如果只填写sender, 表示默认走这个出口
+    - sender: 0.0.0.0
+    # 如果sender设置为block, 表示阻止访问
+    - sender: block
+      domain:
+        - aliyun.com
+      ip:
+        - 1.2.3.4
+# 这是第二个节点配置的示例, 有需要先取消注释
+# 可以继续添加第三个, 四个
+#- name: server2
+#  webapi:
+#    type: v2board
+#    url: https://google.com/
+#    id: 2
+#    key: iampassword
+#  ssl:
+#    cert: "/path/to/cert.pem"
+#    key: "/path/to/cert.key"
