@@ -1,0 +1,9 @@
+#!/sbin/openrc-run
+
+command=/usr/sbin/dalacin
+pidfile=/run/${RC_SVCNAME}.pid
+command_background=true
+
+depend() {
+        need net
+}
